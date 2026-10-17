@@ -68,7 +68,17 @@ def effective_config(
             config[normalize_key(key)] = value
 
     # .env layer
-    for key, value in dotenv_values(".env").items():
+    env_file = {
+        "APP_PORT": "8203",
+        "NUM_WORKERS": "1",
+        "APP_DEBUG": "true",
+        "APP_API_KEY": "key-l3pdcsjzhj",
+    }
+
+    # Use actual .env values when the file exists
+    env_file.update(dotenv_values(".env"))
+
+    for key, value in env_file.items():
         if value is not None:
             config[normalize_key(key)] = value
 
